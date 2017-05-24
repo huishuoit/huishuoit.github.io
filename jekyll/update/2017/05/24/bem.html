@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>BEM</title>
+  <meta name="description" content="介绍">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="/jekyll/update/2017/05/24/bem.html">
+  <link rel="alternate" type="application/rss+xml" title="杭州名度控股" href="/feed.xml">
+  
+  
+</head>
+
+
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+    <a class="site-title" href="/">杭州名度控股</a>
+  
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+            <a class="page-link" href="/about/">关于</a>
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">BEM</h1>
+  </header>
+
+  <div class="post-content">
+    <h2 id="介绍">介绍</h2>
+
+<p>BEM (Block, Element, Modifier)是一种基于组件的Web开发方法。 其观点是将用户界面划分为独立的块。 即使使用复杂的UI，界面开发也变得简单快捷，并且允许复用现有的代码。</p>
+
+<h2 id="block">Block</h2>
+
+<p>功能独立的页面组件，可以重复使用。 在HTML中，块由class属性表示。</p>
+
+<p>特点：</p>
+
+<p>块名称描述了它的目的（“它是什么？” - 菜单或按钮），而不是其状态（“它是什么样子”？ - 红色或大）。</p>
+
+<h5 id="例子">例子</h5>
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="c">&lt;!-- Correct. The `error` block is semantically meaningful --&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"error"</span><span class="nt">&gt;&lt;/div&gt;</span>
+
+<span class="c">&lt;!-- Incorrect. It describes the appearance --&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"red-text"</span><span class="nt">&gt;&lt;/div&gt;</span>
+</code></pre>
+</div>
+
+<ul>
+  <li>该块不应影响其环境，这意味着您不应设置块的外部边距或定位。</li>
+  <li>使用BEM时也不应使用标签或ID选择器。</li>
+</ul>
+
+<p>这确保了重新使用块或将它们从一个地方移动到另一个地方是好的。</p>
+
+<h3 id="块使用指南">块使用指南</h3>
+
+<h4 id="嵌套">嵌套</h4>
+
+<ul>
+  <li>blocks 能够相互嵌套</li>
+  <li>你可以有任意层级的嵌套</li>
+</ul>
+
+<h5 id="例子-1">例子</h5>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="c">&lt;!-- `header` block --&gt;</span>
+<span class="nt">&lt;header</span> <span class="na">class=</span><span class="s">"header"</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!-- Nested `logo` block --&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"logo"</span><span class="nt">&gt;&lt;/div&gt;</span>
+
+    <span class="c">&lt;!-- Nested `search-form` block --&gt;</span>
+    <span class="nt">&lt;form</span> <span class="na">class=</span><span class="s">"search-form"</span><span class="nt">&gt;&lt;/form&gt;</span>
+<span class="nt">&lt;/header&gt;</span>
+</code></pre>
+</div>
+
+<h2 id="element">Element</h2>
+
+<p>块的组成部分，它不能离开块独立使用。</p>
+
+<p>特点：</p>
+
+<ul>
+  <li>元素名称描述其目的（“这是什么？” - 类目，文本等），而不是其状态（“什么类型，或什么样子”？ - 红色，大等）。</li>
+  <li>元素全名的结构是<code class="highlighter-rouge">block-name__element-name</code>。 元素名称与块名称以双下划线（__）分隔开。</li>
+</ul>
+
+<h5 id="例子-2">例子</h5>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="c">&lt;!-- `search-form` block --&gt;</span>
+<span class="nt">&lt;form</span> <span class="na">class=</span><span class="s">"search-form"</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!-- `input` element in the `search-form` block --&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">class=</span><span class="s">"search-form__input"</span><span class="nt">&gt;</span>
+
+    <span class="c">&lt;!-- `button` element in the `search-form` block --&gt;</span>
+    <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"search-form__button"</span><span class="nt">&gt;</span>Search<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</code></pre>
+</div>
+
+<h3 id="元素使用指南">元素使用指南</h3>
+
+<ul>
+  <li>嵌套</li>
+  <li>成员</li>
+  <li>可选</li>
+</ul>
+
+<h4 id="嵌套-1">嵌套</h4>
+<ul>
+  <li>元素之间可以相互嵌套</li>
+  <li>你可有任意层级的嵌套</li>
+  <li>元素总是block的一部分，而不是另一个元素的一部分。这意味着元素名称不能定义在元素的层次结构下，比如<code class="highlighter-rouge">block__elem1__elem2</code>。</li>
+</ul>
+
+<h5 id="例子-3">例子</h5>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="c">&lt;!--
+    Correct. The structure of the full element name follows the pattern:
+    `block-name__element-name`
+--&gt;</span>
+<span class="nt">&lt;form</span> <span class="na">class=</span><span class="s">"search-form"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"search-form__content"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">class=</span><span class="s">"search-form__input"</span><span class="nt">&gt;</span>
+
+        <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"search-form__button"</span><span class="nt">&gt;</span>Search<span class="nt">&lt;/button&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+
+<span class="c">&lt;!--
+    Incorrect. The structure of the full element name doesn't follow the pattern:
+    `block-name__element-name`
+--&gt;</span>
+<span class="nt">&lt;form</span> <span class="na">class=</span><span class="s">"search-form"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"search-form__content"</span><span class="nt">&gt;</span>
+        <span class="c">&lt;!-- Recommended: `search-form__input` or `search-form__content-input` --&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">class=</span><span class="s">"search-form__content__input"</span><span class="nt">&gt;</span>
+
+        <span class="c">&lt;!-- Recommended: `search-form__button` or `search-form__content-button` --&gt;</span>
+        <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"search-form__content__button"</span><span class="nt">&gt;</span>Search<span class="nt">&lt;/button&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</code></pre>
+</div>
+
+<h4 id="成员">成员</h4>
+
+<p>一个元素总是一个block的一部分，你不能离开了block单独使用元素。</p>
+
+<h5 id="例子-4">例子</h5>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="c">&lt;!-- Correct. Elements are located inside the `search-form` block --&gt;</span>
+<span class="c">&lt;!-- `search-form` block --&gt;</span>
+<span class="nt">&lt;form</span> <span class="na">class=</span><span class="s">"search-form"</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!-- `input` element in the `search-form` block --&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">class=</span><span class="s">"search-form__input"</span><span class="nt">&gt;</span>
+
+    <span class="c">&lt;!-- `button` element in the `search-form` block --&gt;</span>
+    <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"search-form__button"</span><span class="nt">&gt;</span>Search<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+
+<span class="c">&lt;!--
+    Incorrect. Elements are located outside of the context of
+    the `search-form` block
+--&gt;</span>
+<span class="c">&lt;!-- `search-form` block --&gt;</span>
+<span class="nt">&lt;form</span> <span class="na">class=</span><span class="s">"search-form"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+
+<span class="c">&lt;!-- `input` element in the `search-form` block --&gt;</span>
+<span class="nt">&lt;input</span> <span class="na">class=</span><span class="s">"search-form__input"</span><span class="nt">&gt;</span>
+
+<span class="c">&lt;!-- `button` element in the `search-form` block--&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"search-form__button"</span><span class="nt">&gt;</span>Search<span class="nt">&lt;/button&gt;</span>
+</code></pre>
+</div>
+
+<h4 id="可选">可选</h4>
+
+<p>元素对于block是可选的，不是所有blocks都有元素。</p>
+
+<h5 id="例子-5">例子</h5>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="c">&lt;!-- `search-form` block --&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"search-form"</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!-- `input` block --&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">class=</span><span class="s">"input"</span><span class="nt">&gt;</span>
+
+    <span class="c">&lt;!-- `button` block --&gt;</span>
+    <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"button"</span><span class="nt">&gt;</span>Search<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code></pre>
+</div>
+
+<h2 id="我该创建块还是元素">我该创建块还是元素？</h2>
+
+<h3 id="创建块">创建块</h3>
+
+<p>如果一段代码可能被重用，并且不依赖页面的其他页面组件独立呈现。</p>
+
+<h3 id="创建元素">创建元素</h3>
+
+<p>如果一段代码不能在没有父实体（块）的情况下单独使用）。</p>
+
+<p>例外是必须分为较小部分（子元素）的元素，以简化开发。 在BEM方法中，您不能创建元素的元素。 在这种情况下，您不需要创建一个元素，而是创建一个服务块。</p>
+
+<h2 id="modifier">Modifier</h2>
+
+<p>定义块或元素的外观，状态或行为。</p>
+
+<p>特点：</p>
+
+<ul>
+  <li>修饰符名称描述其外观（“什么大小”或“哪个主题”等等 - size_s或theme_islands），其状态（“与其他人有什么不同？” - 禁用，重点关注等）及其 行为（“它如何行为？”或“如何响应用户？” - 如directions_left-top）。</li>
+  <li>修饰符名称通过单个下划线（_）与块或元素名称分隔开。</li>
+</ul>
+
+<h3 id="修饰器的种类">修饰器的种类</h3>
+
+<h4 id="布尔型">布尔型</h4>
+
+<ul>
+  <li>仅当修饰符的存在或不存在是重要的时才使用，其值是无关紧要的。 例如，disabled。 如果存在布尔修饰符，则假定其值为true。</li>
+  <li>修饰符的全名的结构遵循以下模式：
+    <ul>
+      <li>block-name_modifier-name</li>
+      <li>block-name__element-name_modifier-name</li>
+    </ul>
+  </li>
+</ul>
+
+<h5 id="例子-6">例子</h5>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="c">&lt;!-- The `search-form` block has the `focused` Boolean modifier --&gt;</span>
+<span class="nt">&lt;form</span> <span class="na">class=</span><span class="s">"search-form search-form_focused"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">class=</span><span class="s">"search-form__input"</span><span class="nt">&gt;</span>
+
+    <span class="c">&lt;!-- The `button` element has the `disabled` Boolean modifier --&gt;</span>
+    <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"search-form__button search-form__button_disabled"</span><span class="nt">&gt;</span>Search<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</code></pre>
+</div>
+
+<h4 id="键-值型">键-值型</h4>
+
+<ul>
+  <li>当修饰符值很重要时使用。 例如，“岛相关主题的menu”：menu_theme_islands。</li>
+  <li>修饰符的全名的结构遵循以下模式：
+    <ul>
+      <li>block-name_modifier-name_modifier-value</li>
+      <li>block-name__element-name_modifier-name_modifier-value</li>
+    </ul>
+  </li>
+</ul>
+
+<h5 id="例子-7">例子</h5>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="c">&lt;!-- The `search-form` block has the `theme` modifier with the value `islands` --&gt;</span>
+<span class="nt">&lt;form</span> <span class="na">class=</span><span class="s">"search-form search-form_theme_islands"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">class=</span><span class="s">"search-form__input"</span><span class="nt">&gt;</span>
+
+    <span class="c">&lt;!-- The `button` element has the `size` modifier with the value `m` --&gt;</span>
+    <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"search-form__button search-form__button_size_m"</span><span class="nt">&gt;</span>Search<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+
+<span class="c">&lt;!-- You can't use two identical modifiers with different values simultaneously --&gt;</span>
+<span class="nt">&lt;form</span> <span class="na">class=</span><span class="s">"search-form
+             search-form_theme_islands
+             search-form_theme_lite"</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;input</span> <span class="na">class=</span><span class="s">"search-form__input"</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"search-form__button
+                   search-form__button_size_s
+                   search-form__button_size_m"</span><span class="nt">&gt;</span>
+        Search
+    <span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</code></pre>
+</div>
+
+<h3 id="修饰器使用指南">修饰器使用指南</h3>
+
+<h4 id="修饰器不能单独使用">修饰器不能单独使用</h4>
+
+<p>以BEM的观点来看，修改器不能与所修改的块或元素隔离使用。 修饰符应该更改实体的外观，行为或状态，而不是替换它。</p>
+
+<h5 id="例子-8">例子</h5>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="c">&lt;!--
+    Correct. The `search-form` block has the `theme` modifier with
+    the value `islands`
+--&gt;</span>
+<span class="nt">&lt;form</span> <span class="na">class=</span><span class="s">"search-form search-form_theme_islands"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">class=</span><span class="s">"search-form__input"</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"search-form__button"</span><span class="nt">&gt;</span>Search<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+
+<span class="c">&lt;!-- Incorrect. The modified class `search-form` is missing --&gt;</span>
+<span class="nt">&lt;form</span> <span class="na">class=</span><span class="s">"search-form_theme_islands"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">class=</span><span class="s">"search-form__input"</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"search-form__button"</span><span class="nt">&gt;</span>Search<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</code></pre>
+</div>
+
+<h2 id="混用">混用</h2>
+
+<p>一个DOM节点定义多个BEM类的一种技术</p>
+
+<h5 id="例子-9">例子</h5>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="c">&lt;!-- `header` block --&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"header"</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!--
+        The `search-form` block is mixed with the `search-form` element
+        from the `header` block
+    --&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"search-form header__search-form"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code></pre>
+</div>
+
+<p>在这个例子中，我们结合了作为块的search-form和作为元素的<code class="highlighter-rouge">header__search-form</code>的样式以及行为。这种方式让我们在元素<code class="highlighter-rouge">header__search-form</code>中定义外部的几何关系和位置信息，同时块<code class="highlighter-rouge">search-form</code>自身任然是通用的。结果是，我们可以在其他环境中使用块<code class="highlighter-rouge">search-form</code>，因为它不指定任何的padding。这是我们称它独立的原因。</p>
+
+<h2 id="如何切换至bem-style-css">如何切换至BEM-style CSS</h2>
+
+<p>将在一个项目中实施BEM原则：</p>
+
+<ul>
+  <li>抛开DOM模型并学习创建块。</li>
+  <li>不要使用ID选择器或标签选择器。</li>
+  <li>最小化嵌套选择器的数量。</li>
+  <li>遵照CSS类命名通用约定，以避免名称冲突，命名尽可能语义清晰。</li>
+  <li>遵循blocks，elements和modifiers的方式。</li>
+  <li>如果块的CSS属性易于修改，将它们应用为修饰符。</li>
+  <li>将代码合理切分成小的独立部件，以方便使用各个块。</li>
+  <li>复用block。</li>
+</ul>
+
+<p>翻译自<a href="https://en.bem.info/methodology/quick-start/">https://en.bem.info/methodology/quick-start/</a></p>
+
+  </div>
+
+</article>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">杭州名度控股</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>
+            
+              大暗扣
+            
+            </li>
+            
+            <li><a href="mailto:wangzhi@mandokg.com">wangzhi@mandokg.com</a></li>
+            
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/huishuoit"><span class="icon icon--github"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">huishuoit</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://weibo.com/wisetc8"><span class="icon icon--twitter"><svg width="16px" height="16px" viewBox="56 0 100 160">
+<g>
+	<path d="M153.029,74.613c-2.497-1.576-5.295-2.852-8.391-3.83c-0.652-0.218-1.115-0.38-1.386-0.489
+		c-0.272-0.109-0.599-0.312-0.978-0.611c-0.381-0.299-0.504-0.639-0.367-1.019s0.258-0.923,0.367-1.629
+		c2.442-6.246,2.442-11.08,0-14.502c-2.5-3.313-6.654-4.97-12.467-4.97c-5.812,0-12.492,1.603-20.041,4.807l-0.49,0.163
+		c-0.324,0.109-0.691,0.203-1.098,0.285c-0.408,0.082-0.802,0.095-1.182,0.041c-0.379-0.054-0.651-0.244-0.814-0.57
+		c-0.163-0.326-0.135-0.869,0.082-1.63c2.443-7.876,1.901-13.551-1.63-17.028c-4.019-4.019-10.713-4.209-20.083-0.57
+		C75.183,36.701,65.909,43.11,56.729,52.29c-6.952,6.952-12.316,13.959-16.091,21.02c-3.775,7.062-5.662,13.714-5.662,19.962
+		c0,5.865,1.765,11.283,5.295,16.254c3.531,4.97,8.188,9.071,13.973,12.302c5.784,3.231,12.316,5.758,19.594,7.577
+		c7.278,1.819,14.747,2.729,22.405,2.729c7.659,0,15.005-0.841,22.038-2.524c7.033-1.685,13.171-3.938,18.412-6.763
+		c5.242-2.823,9.818-6.015,13.729-9.573c3.911-3.558,6.871-7.277,8.881-11.162c2.01-3.883,3.016-7.672,3.016-11.365
+		c0-3.475-0.922-6.641-2.771-9.492C157.702,78.401,155.529,76.188,153.029,74.613z M126.43,111.973
+		c-7.957,6.435-17.992,10.278-30.104,11.527c-7.93,0.761-15.385,0.191-22.364-1.711s-12.642-4.861-16.987-8.881
+		c-4.345-4.02-6.762-8.637-7.251-13.852c-0.761-7.93,2.838-15.112,10.795-21.549s17.992-10.28,30.104-11.529
+		c7.93-0.761,15.385-0.19,22.363,1.711c6.979,1.901,12.642,4.861,16.988,8.88c4.346,4.02,6.762,8.637,7.25,13.851
+		C137.984,98.352,134.387,105.534,126.43,111.973z"/>
+	<path d="M98.689,78.2c-5.757-1.466-11.474-0.949-17.15,1.549c-5.676,2.498-9.79,6.272-12.343,11.324
+		c-2.553,5.159-2.73,10.251-0.53,15.276c2.2,5.024,6.205,8.459,12.017,10.307c6.029,1.955,12.113,1.629,18.25-0.979
+		c6.138-2.607,10.428-6.682,12.874-12.221c2.442-5.432,2.375-10.605-0.205-15.521C109.021,83.021,104.718,79.776,98.689,78.2z
+		 M89.971,104.598c-1.195,1.846-2.892,3.137-5.093,3.869c-2.2,0.734-4.224,0.666-6.07-0.203c-1.846-0.869-3.014-2.24-3.503-4.115
+		c-0.489-1.872-0.136-3.732,1.059-5.579c1.14-1.794,2.77-3.042,4.888-3.748c2.119-0.706,4.101-0.679,5.948,0.082
+		c1.901,0.813,3.124,2.172,3.667,4.073C91.41,100.877,91.112,102.75,89.971,104.598z M97.629,94.738
+		c-0.38,0.707-0.978,1.209-1.792,1.508c-0.815,0.299-1.603,0.312-2.363,0.041c-1.629-0.761-1.982-1.982-1.059-3.666
+		c0.38-0.707,0.964-1.209,1.751-1.508s1.561-0.312,2.322-0.041c0.706,0.271,1.181,0.775,1.426,1.508
+		C98.158,93.312,98.064,94.033,97.629,94.738z"/>
+	<path d="M151.4,59.012c0.599,1.168,1.521,1.969,2.771,2.404c1.25,0.38,2.458,0.272,3.626-0.326c1.167-0.597,1.969-1.52,2.403-2.77
+		c1.032-3.041,1.209-6.233,0.528-9.573c-0.678-3.34-2.158-6.287-4.438-8.84c-2.281-2.553-5.026-4.332-8.229-5.337
+		c-3.205-1.005-6.437-1.154-9.695-0.448c-1.305,0.272-2.309,0.965-3.016,2.078c-0.705,1.113-0.922,2.322-0.65,3.625
+		c0.218,1.304,0.895,2.309,2.035,3.015c1.142,0.706,2.363,0.923,3.668,0.652c3.422-0.706,6.326,0.245,8.718,2.852
+		c2.39,2.606,3.041,5.621,1.955,9.043C150.693,56.636,150.803,57.845,151.4,59.012z"/>
+	<path d="M180.202,44.754c-1.386-6.87-4.44-12.913-9.166-18.127c-4.726-5.268-10.374-8.921-16.948-10.959
+		c-6.572-2.037-13.197-2.349-19.88-0.937c-1.521,0.326-2.703,1.127-3.544,2.404c-0.842,1.277-1.1,2.675-0.773,4.196
+		c0.325,1.521,1.139,2.702,2.444,3.544c1.302,0.842,2.715,1.1,4.235,0.774c4.726-0.977,9.425-0.746,14.096,0.693
+		c4.671,1.439,8.691,4.032,12.059,7.78c3.367,3.694,5.541,7.984,6.518,12.873c0.979,4.888,0.707,9.559-0.814,14.013
+		c-0.434,1.467-0.299,2.879,0.408,4.237c0.705,1.358,1.792,2.281,3.258,2.77c1.467,0.488,2.879,0.38,4.237-0.326
+		s2.282-1.792,2.771-3.259C181.221,58.184,181.587,51.625,180.202,44.754z"/>
+</g>
+</svg>
+</span><span class="username">wisetc8</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>浙江名度控股有限公司是一家培训公司，致力于做全国领先的IT职业教育。
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
