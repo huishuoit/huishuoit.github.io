@@ -6,11 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Blueprint Routes</title>
-  <meta name="description" content="Blueprint Routes">
+  <title>sails命令行工具之生成器</title>
+  <meta name="description" content="sails generate">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="/node.js/sails/2017/05/24/blueprint-routes.html">
+  <link rel="canonical" href="/node.js/sails/2017/05/26/sails-generate.html">
   <link rel="alternate" type="application/rss+xml" title="杭州名度控股" href="/feed.xml">
   
   
@@ -67,23 +67,45 @@
         <article class="post">
 
   <header class="post-header">
-    <h1 class="post-title">Blueprint Routes</h1>
+    <h1 class="post-title">sails命令行工具之生成器</h1>
   </header>
 
   <div class="post-content">
-    <h2 id="blueprint-routes">Blueprint Routes</h2>
+    <h1 id="sails-generate">sails generate</h1>
 
-<p>当您启用blueprints并运行<code class="highlighter-rouge">sails lift</code>时，框架会检查您的controllers，models和配置，以便自动绑定某些路由。 这些隐含的blueprint routes（有时称为“阴影路由”，甚至只是“阴影”）允许您的应用程序响应某些请求，而无需在<code class="highlighter-rouge">config/routes.js</code>文件中手动绑定这些路由。 默认情况下，blueprint routes指向其相应的blueprint actions（请参阅下面的“blueprint actions”），并且可以使用自定义代码覆盖。</p>
+<p>Sails 搭配几个 <em>generators</em> 来帮助您快速的搭建一个新的项目.
+您也可以 <a href="http://sailsjs.com/documentation/concepts/extending-sails/Generators/customGenerators.html">创建您自己的
+generators</a>
+来处理频繁的任务, 或者扩展功能 （例如，通过创建一个 generator 来为您<a href="https://github.com/balderdashy/sails-generate-views-jade">钟爱的模板语言</a>输出视图文件）.</p>
 
-<p>sails有三种blueprint routes：</p>
+<p>下列 generators 集成于 Sails:</p>
 
-<ul>
-  <li><strong>RESTful routes</strong>,路径始终为<code class="highlighter-rouge">/:modelIdentity</code>或<code class="highlighter-rouge">/:modelIdentity/:id</code>。这些路由使用HTTP “verb”来确定采取的行动;例如对<code class="highlighter-rouge">/user</code>的<code class="highlighter-rouge">POST</code>请求将创建一个新用户，并且对<code class="highlighter-rouge">/user/123</code>的<code class="highlighter-rouge">DELETE</code>请求将删除主键为123的用户。在生产环境中，RESTful路由一般应受到策略的保护，以避免未经授权的访问。</li>
-  <li><strong>Shortcut routes</strong>,采取的行动在路径中编码。例如，<code class="highlighter-rouge">/user/create?name=joe</code>快捷方式创建一个新用户，而<code class="highlighter-rouge">/user/update/1?name=mike</code>更新用户＃1。这些路由只响应<code class="highlighter-rouge">GET</code>请求。快捷路线非常适合开发，但一般应在生产环境中禁用。</li>
-  <li><strong>Action routes</strong>，可自动为您的自定义控制器actions创建routes。例如，如果您有一个带有bar方法的<code class="highlighter-rouge">FooController.js</code>文件，那么只要启用了blueprint action routes，将自动为您创建一个<code class="highlighter-rouge">/foo/bar</code>路由。与RESTful和快捷路由不同，动作路由不要求controller具有相应的model文件。</li>
-</ul>
+<h4 id="sails-generate-new-appname"><code class="highlighter-rouge">sails generate new &lt;appName&gt;</code></h4>
 
-<p>请参阅<a href="http://sailsjs.com/documentation/reference/sails.config/sails.config.blueprints.html">blueprints subsection of the configuration reference</a>，包括如何启用/禁用不同的蓝图路由类型。</p>
+<p>在一个叫做 <strong>appName</strong> 的文件夹中创建一个新的 Sails 项目. 见<a href="http://sailsjs.com/documentation/reference/cli/sailsnew.html"><code class="highlighter-rouge">sails new</code></a>有用法选项.</p>
+
+<h4 id="sails-generate-api-foo"><code class="highlighter-rouge">sails generate api &lt;foo&gt;</code></h4>
+
+<p>生成 <strong>api/models/Foo.js</strong> 和 <strong>api/controllers/FooController.js</strong></p>
+
+<h4 id="sails-generate-model-foo-attribute1type1-attribute2type2--"><code class="highlighter-rouge">sails generate model &lt;foo&gt; [attribute1:type1, attribute2:type2 ... ]</code></h4>
+
+<p>生成 <strong>api/models/Foo.js</strong>, 加入指定类型的 attributes 可选.</p>
+
+<h4 id="sails-generate-controller-foo-action1-action2-"><code class="highlighter-rouge">sails generate controller &lt;foo&gt; [action1, action2, ...]</code></h4>
+
+<p>生成 <strong>api/controllers/FooController.js</strong>, 加入指定名称的 actions 可选.</p>
+
+<h4 id="sails-generate-adapter-foo"><code class="highlighter-rouge">sails generate adapter &lt;foo&gt;</code></h4>
+
+<p>生成一个 <strong>api/adapters/foo</strong> 包含
+用来构建一个转换器所必要的文件的文件夹.</p>
+
+<h4 id="sails-generate-generator-foo"><code class="highlighter-rouge">sails generate generator &lt;foo&gt;</code></h4>
+
+<p>生成一个 <strong>foo</strong> 包含用来构建一个新的 generator 所需要的文件的文件夹.</p>
+
+<p>翻译自<a href="http://sailsjs.com/documentation/reference/command-line-interface/sails-generate">http://sailsjs.com/documentation/reference/command-line-interface/sails-generate</a></p>
 
   </div>
 
