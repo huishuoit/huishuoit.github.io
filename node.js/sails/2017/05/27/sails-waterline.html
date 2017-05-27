@@ -6,11 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>杭州名度控股</title>
-  <meta name="description" content="浙江名度控股有限公司是一家培训公司，致力于做全国领先的IT职业教育。">
+  <title>sails Waterline (ORM)</title>
+  <meta name="description" content="Waterline (ORM)">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="/">
+  <link rel="canonical" href="/node.js/sails/2017/05/27/sails-waterline.html">
   <link rel="alternate" type="application/rss+xml" title="杭州名度控股" href="/feed.xml">
   
   
@@ -64,56 +64,103 @@
 
     <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <div class="home">
+        <article class="post">
 
-  <h1 class="page-heading">Posts</h1>
-  
-  
+  <header class="post-header">
+    <h1 class="post-title">sails Waterline (ORM)</h1>
+  </header>
 
+  <div class="post-content">
+    <h2 id="waterline-orm">Waterline (ORM)</h2>
 
-  <ul class="post-list">
-    
-      <li>
-        
-        <span class="post-meta">May 27, 2017</span>
+<p>默认情况下，Sails集成有一个叫做 Waterline(补充自 orm hook.) 的ORM.</p>
 
-        <h2>
-          <a class="post-link" href="/node.js/sails/2017/05/27/sails-waterline.html">sails Waterline (ORM)</a>
-        </h2>
-      </li>
-    
-      <li>
-        
-        <span class="post-meta">May 26, 2017</span>
+<h3 id="使用-models">使用 Models</h3>
 
-        <h2>
-          <a class="post-link" href="/node.js/sails/2017/05/26/sails-generate.html">sails命令行工具之生成器</a>
-        </h2>
-      </li>
-    
-      <li>
-        
-        <span class="post-meta">May 24, 2017</span>
+<p>此处文档关注在 model 上由 Waterline 提供的方法. 作为它的补充, 能有额为的方法来自 hooks (例如资源丰富的发布/订阅方法), 可以被暴露在下部的转化器中来提供自定义的方法, 或者在你的应用中被手写来封装自定义代码.</p>
 
-        <h2>
-          <a class="post-link" href="/node.js/sails/2017/05/24/blueprint-routes.html">Blueprint Routes</a>
-        </h2>
-      </li>
-    
-      <li>
-        
-        <span class="post-meta">May 24, 2017</span>
+<p>想要一个在Sails/Waterline中对 models 更深的理解, 见<a href="http://sailsjs.com/documentation/concepts/ORM/Models.html">http://sailsjs.com/documentation/concepts/ORM/Models.html</a>.</p>
 
-        <h2>
-          <a class="post-link" href="/specification/css/2017/05/24/bem.html">BEM CSS 命名规范快速开始</a>
-        </h2>
-      </li>
-    
-  </ul>
+<p><img src="/assets/img/8uRlFi8.png" alt="" /></p>
 
-  <p class="rss-subscribe">订阅 <a href="/feed.xml">via RSS</a></p>
+<h3 id="model-自带的方法">Model 自带的方法</h3>
 
+<p>通常情况下，model 方法是<em>异步的</em>, 意味着你不能够仅仅调用它然后用它的返回值. 你必须用 callbacks, 或者 promises替代. 大多数 model 的自带方法接受一个回调函数作为一个可选的最终的参数。如果回调函数没有被提供, 一个可链的 Query 对象被返回, 它有想 <code class="highlighter-rouge">.where()</code> 和 <code class="highlighter-rouge">.exec()</code>的方法。参见使用 Queries 了解更多。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>方法</th>
+      <th>总结</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">.create()</code></td>
+      <td>创建由传入的对象组成的记录</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">.find()</code></td>
+      <td>查找与指定条件匹配的记录数组</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">.findOne()</code></td>
+      <td>查找与指定条件匹配的单个记录，如果没有，则返回null。</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">.update()</code></td>
+      <td>更新符合指定条件的记录，设置attrName：value对的指定对象。</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">.destroy()</code></td>
+      <td>销毁符合指定条件的记录。</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">.findOrCreate()</code></td>
+      <td>查找与指定条件匹配的单个记录，如果不记录则创建它。</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">.count()</code></td>
+      <td>获取符合指定条件的记录总数。</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">.native()/query()</code></td>
+      <td>直接调用底层数据库驱动程序。</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">.stream()</code></td>
+      <td>返回符合指定条件的可读（对象模式）记录流</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="sailsmodels"><code class="highlighter-rouge">sails.models</code></h4>
+
+<p>如果您需要在 Sails 中禁用全局变量, 您还是能够用 <code class="highlighter-rouge">sails.models.&lt;model_identity&gt;</code> 来得到的您的 models.</p>
+
+<p>一个model的<code class="highlighter-rouge">identity</code>不同于他的 <code class="highlighter-rouge">globalId</code>. 这个 <code class="highlighter-rouge">globalId</code> 自动决定于model的名字, 然而<code class="highlighter-rouge">identity</code>全是小写。 例如你定义在 api/models/Kitten.js 中的 model 有一个叫做 Kitten 的 <code class="highlighter-rouge">globalId</code>，但是他的<code class="highlighter-rouge">identity</code>是 kitten。 例如。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="c1">// Kitten === sails.models.kitten</span>
+<span class="nx">sails</span><span class="p">.</span><span class="nx">models</span><span class="p">.</span><span class="nx">kitten</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">exec</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">allTheKittens</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// We also could have just used `Kitten.find().exec(...)`</span>
+  <span class="c1">// if we'd left the global variable exposed.</span>
+<span class="p">});</span>
+</code></pre>
 </div>
+
+<h3 id="用-promises">用 Promises</h3>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">sails</span><span class="p">.</span><span class="nx">models</span><span class="p">.</span><span class="nx">kitten</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">alltheKittens</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">//.... </span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">){</span>
+  <span class="c1">//....</span>
+<span class="p">});</span>
+</code></pre>
+</div>
+
+  </div>
+
+</article>
 
       </div>
     </main>
